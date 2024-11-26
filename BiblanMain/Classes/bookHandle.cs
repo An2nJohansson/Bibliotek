@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BiblanMain.Classes
 {
-    internal class Class1
+    internal class bookHandle
     {
     }
 }
