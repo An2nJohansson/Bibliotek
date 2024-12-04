@@ -11,7 +11,7 @@ List<SignupClass> usernames = new List<SignupClass>(); //Lista för användare/a
 while (true)
 {
     WriteLine("---------------------------------------");
-    WriteLine("Välkommen till Johanssons Bibliotek! :)");
+    WriteLine("Välkommen till JAJO Bibliotek! :)");
     WriteLine("---------------------------------------");
 
     WriteLine("Tryck [ 1 ] för att registrera användare eller administratör.");
@@ -28,6 +28,7 @@ while (true)
         switch (number)
         {
             case 1:
+                Clear();
                 WriteLine("Registrera användare eller administratör");
                 WriteLine("Ange önskat användarnamn:");
                 string username = ReadLine();
@@ -50,10 +51,12 @@ while (true)
                     WriteLine("Ogiltig input för administratör, vänligen ange 0 eller 1.");
                 }
 
+                
                 SignupClass users = new SignupClass { Username = username, Password = password, Admin = admin };
                 savedata(users);
                 usernames.Add(users);
 
+               // Metod för att spara användardata till sqlite table i databas
                 static void savedata(SignupClass users)
                 {
 
@@ -73,7 +76,7 @@ while (true)
 
                         //insert
                         var rowInserted = command.ExecuteNonQuery();
-                        WriteLine($"Användaren/Admin '{users.Username} {users.Password} {users.Admin}' skapades till databas.");
+                        WriteLine($"Användaren/Admin '{users.Username}' skapades till databas.");
                     }
                     catch (SqliteException ex)
                     {
@@ -110,6 +113,7 @@ while (true)
                     
                     if (user.Admin == 1)
                     {
+                        Clear();
                         WriteLine($"Inloggningen lyckades! Välkommen, administratör {user.Username}!");
 
                         // Meny för admin som ska kunna lägga till, ta bort och uppdatera bokinfo
@@ -129,42 +133,58 @@ while (true)
                             switch (adminChoice)
                             {
                                 case "1":
-                                    // Anropar metod från klass Books för att lägga till bok
+                                    Clear();
+                                    // Anropar metod från klass Books för att vis alista med böcker samt lägga till bok
+                                    Books.ShowBookList();
                                     Books.AddBook();
                                     
                                     break;
 
                                 case "2":
-                                    // Ta bort bok
-                                    
+                                    Clear();
+                                    Books.ShowBookList();
+                                    // Metod för att radera en bok ur systemet
+                                    Books.DeleteBook();
+
                                     break;
 
                                 case "3":
+                                    Clear();
+                                    Books.ShowBookList();
                                     // Uppdatera bok
-                                    
+
                                     break;
 
                                 case "4":
-                                    // Sök efter bok
-                                    
+                                    //anropar metod för att söka efter en bok.
+                                    Clear();
+                                    Books.ShowBookList();
+                                    Books.SearchBook();
+
                                     break;
 
                                 case "5":
-                                    // Låna bok
-                                    
+                                    Clear();
+                                    Books.ShowBookList(); //skriver ut lista med böcker så att man kan se vad man vill låna
+                                    Books.BorrowBook(); //metod för att låna bok
+
                                     break;
 
                                 case "6":
-                                    // Returnera bok
-                                    
+                                    Clear();
+                                    Books.ShowBookList();
+                                    Books.ReturnBook(); //metod för att lämna tillbaka bok
+
                                     break;
 
                                 case "7":
                                     //stänger admin meny
+                                    Clear();
                                     adminMenu = false;
                                     break;
 
                                 default:
+                                    Clear();
                                     WriteLine("Ogiltig input, ange ditt svar i siffror.. 1, 2, eller 3 osv..");
                                     break;
                             }
@@ -172,6 +192,7 @@ while (true)
                     }
                     else
                     {
+                        Clear();
                         WriteLine($"Inloggningen lyckades! Välkommen {user.Username}!");
 
                         // Meny för vanlig användare utan admin rättigheter
@@ -188,25 +209,33 @@ while (true)
                             switch (userChoice)
                             {
                                 case "1":
-                                    // Sök efter bok
-                                    
+                                    Clear();
+                                    Books.ShowBookList();
+                                    Books.SearchBook();
+
                                     break;
 
                                 case "2":
-                                    // Låna bok
+                                    Clear();
+                                    Books.ShowBookList(); 
+                                    Books.BorrowBook();
                                     
                                     break;
 
                                 case "3":
-                                    // lämna tillbaka bok
-                                    
+                                    Clear();
+                                    Books.ShowBookList();
+                                    Books.ReturnBook();
+
                                     break;
 
                                 case "4":
+                                    Clear();
                                     userMenu = false;
                                     break;
 
                                 default:
+                                    Clear();
                                     WriteLine("Ogiltig input, ange ditt svar i siffror.. 1, 2, eller 3 osv..");
                                     break;
                             }
@@ -215,6 +244,7 @@ while (true)
                 }
                 else
                 {
+                    Clear();
                     WriteLine("Felaktigt användarnamn eller lösenord. Försök igen.");
                 }
                 break;
@@ -227,6 +257,7 @@ while (true)
 
             //ifall användare anger fel input
             default:
+                Clear();
                 WriteLine("Ogiltig input, ange ditt svar i siffror.. 1, 2, eller 3");
                 break;
 
@@ -234,6 +265,7 @@ while (true)
     }
     else
     {
+        Clear();
         WriteLine("Ogiltig input, ange ditt svar i siffror.. 1, 2, eller 3.");
     }
 
