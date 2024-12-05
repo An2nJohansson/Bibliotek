@@ -158,7 +158,8 @@ while (true)
                                 case "3":
                                     Clear();
                                     Books.ShowBookList();
-                                    // Uppdatera bok
+                                    //metod för att uppdatera bokinformation
+                                    Books.UpdateBook();
 
                                     break;
 
