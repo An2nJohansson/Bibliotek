@@ -37,13 +37,17 @@ while (true)
                 string password = ReadLine();
 
                 WriteLine("Är du en administratör från biblioteket? ( 0 = nej, 1 = ja )");
+                
                 //if else för att kontrollera att admin input är korrekt
                 if (int.TryParse(ReadLine(), out int admin) && (admin == 0 || admin == 1))
                 {
                     Clear();
                     WriteLine("Registreringen lyckades, välkommen!:)");
-                }
 
+                    SignupClass users = new SignupClass { Username = username, Password = password, Admin = admin };
+                    savedata(users);
+                    usernames.Add(users);
+                }
 
                 else
                 {
@@ -51,14 +55,14 @@ while (true)
                     WriteLine("Ogiltig input för administratör, vänligen ange 0 eller 1.");
                 }
 
-                
-                SignupClass users = new SignupClass { Username = username, Password = password, Admin = admin };
-                savedata(users);
-                usernames.Add(users);
-
                // Metod för att spara användardata till sqlite table i databas
                 static void savedata(SignupClass users)
                 {
+                    if (users.Admin != 0 && users.Admin != 1)
+                    {
+                        WriteLine("Användaren sparades inte i databas.");
+                        return;
+                    }
 
                     var sql = "INSERT INTO usersAndAdmin (username, password, Admin) " +
                             "VALUES (@username, @password, @admin)";
@@ -80,7 +84,7 @@ while (true)
                     }
                     catch (SqliteException ex)
                     {
-                        WriteLine(ex.Message);
+                        WriteLine($"Ett fel inträffade, var vänlig försök igen: {ex.Message} ");
                     }
                 }
 
@@ -88,6 +92,9 @@ while (true)
 
             case 2:
                 Clear();
+                SignupClass signup = new SignupClass();
+                signup.GetData(usernames);
+
                 WriteLine("Logga in.");
                 WriteLine("Ange ditt användarnamn: ");
                 string loginUsername = ReadLine();
@@ -95,9 +102,9 @@ while (true)
                 WriteLine("Ange ditt lösenord: ");
                 string loginPassword = ReadLine();
 
-                // for loop för att kontrollera lista med användare
                 SignupClass user = null;
 
+                // for loop för att kontrollera lista med användare
                 for (int i = 0; i < usernames.Count; i++)
                 {
                     if (usernames[i].Username == loginUsername)

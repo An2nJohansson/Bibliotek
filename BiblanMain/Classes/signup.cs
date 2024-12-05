@@ -52,16 +52,57 @@ namespace BiblanMain.Classes
                 WriteLine("Ogiltig input för administratör, vänligen ange 0 eller 1.");
             }
         }
-        
-        
-        
-        
-        
-        
-        
 
-        
-        
+        //metod getdata för att hämta användare från databas vi inloggning
+        public void GetData(List<SignupClass> usernames)
+        {
+            // SQL för att hämta användare från databasen
+            var sql = "SELECT username, password, Admin FROM usersAndAdmin";
+
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=MainServer.db");
+                connection.Open();
+                using var command = new SqliteCommand(sql, connection);
+                using var reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string username = reader.GetString(0);
+                        string password = reader.GetString(1);
+                        int isAdmin = reader.GetInt32(2);
+
+                        // Lägg till användare i listan
+                        usernames.Add(new SignupClass
+                        {
+                            Username = username,
+                            Password = password,
+                            Admin = isAdmin
+                        });
+                    }
+                }
+                else
+                {
+                    WriteLine("Kunde inte hitta användare i databasen.");
+                }
+            }
+            catch (SqliteException ex)
+            {
+                WriteLine($"Ett fel inträffade, var vänlig försök igen: {ex.Message}");
+            }
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

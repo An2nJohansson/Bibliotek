@@ -40,13 +40,14 @@ namespace BiblanMain.Classes
         
         public static void AddBook() //metod för att lägga till böcker
         {
-            Console.WriteLine("Ange bokens titel:");
+            WriteLine("Lägg till bok i biblioteket:");
+            WriteLine("Ange bokens titel:");
             string title = ReadLine();
 
-            Console.WriteLine("Ange bokens författare:");
+            WriteLine("Ange bokens författare:");
             string author = ReadLine();
 
-            Console.WriteLine("Ange bokens ISBN nummer:");
+            WriteLine("Ange bokens ISBN nummer:");
             string isbn = ReadLine();
 
             bool available = true;
@@ -55,11 +56,12 @@ namespace BiblanMain.Classes
             Clear();
             WriteLine($"Boken {title} har lagts till i biblioteket.");
             
+            //Kod för att koppla till databas medSQLite
         }
 
         public static void BorrowBook() //Metod för att låna bok
         {
-            WriteLine("Ange ISBN-nummer för den boken som du vill låna.");
+            WriteLine("Ange ISBN-nummer för den boken som du vill låna. Tips: använd COPY PASTE.");
             string isbn = ReadLine();
 
             // går igenom lista med en färdig LINQ metod
@@ -69,19 +71,22 @@ namespace BiblanMain.Classes
                 if (book.Available) 
                 {
                     book.Available = false;
+                    
+                    //Kod för att koppla till databas medSQLite
+                    
                     Clear();
                     WriteLine($"Utlåningen av \"{book.Title}\" lyckades ");
                 }
                 else
                 {
                     Clear();
-                    Console.WriteLine($"Boken \"{book.Title}\" är tyvärr redan utlånad.");
+                    WriteLine($"Boken \"{book.Title}\" är tyvärr redan utlånad.");
                 }
             }
             else
             {
                 Clear();
-                Console.WriteLine("Ingen bok hittades med det ISBN-numret, Var vänlig försök igen.");
+                WriteLine("Ingen bok hittades med det ISBN-numret, Var vänlig försök igen.");
             }
         }
 
@@ -96,6 +101,9 @@ namespace BiblanMain.Classes
                 if (!book.Available) 
                 {
                     book.Available=true;
+
+                    //Kod för att koppla till databas medSQLite
+
                     Clear();
                     WriteLine($"Du har lämnat tillbaka boken \"{book.Title}\" ");
                 }
@@ -151,6 +159,9 @@ namespace BiblanMain.Classes
                     case "3":
                         WriteLine("ange nytt ISBN-Nummer");
                         book.ISBN = ReadLine();
+
+                        //Kod för att koppla till databas medSQLite
+
                         WriteLine("Uppdateringen av ISBN-Nummer lyckades.");
                         break;
 
@@ -177,6 +188,9 @@ namespace BiblanMain.Classes
             if (book != null) 
             {
                 books.Remove(book);
+
+                //Kod för att koppla till databas medSQLite
+
                 Clear();
                 WriteLine($"\"{book.Title}\" har raderats från systemet.");
             }
@@ -212,7 +226,8 @@ namespace BiblanMain.Classes
                 WriteLine("Kunde inte hitta några böcker med den titeln, var vänlig försök igen.");
             }
 
-            //Om jag hade tid så hade jag skapat kod här så att man kunde söka efter författare och isbn också.
+            //Kod för att koppla till databas medSQLite
+            //Om jag hade tid så hade jag skapat kod här så att man kunde söka efter författare och isbn också + sql.
         }   //searchAuthor
             //searchISBN
 
@@ -224,7 +239,7 @@ namespace BiblanMain.Classes
                 WriteLine($"Titel: {book.Title}, Författare: {book.Author}, ISBN: {book.ISBN}, Tillgänglig att låna: {(book.Available ? "Ja" : "Nej")}");
                 WriteLine();
             }
-            WriteLine("--------------------------------------------------------------------------------------------------------------------------------");
+            WriteLine("------------------------------------------------------------------------------------------------------------");
         }
 
     }
