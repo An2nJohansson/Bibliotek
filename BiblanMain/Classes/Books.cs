@@ -144,6 +144,7 @@ namespace BiblanMain.Classes
                        
                         WriteLine("Ange ny titel.");
                         book.Title = ReadLine();
+                        Clear();
                         WriteLine("Uppdateringen av titel lyckades.");
                         break;
 
@@ -152,6 +153,7 @@ namespace BiblanMain.Classes
                         
                         WriteLine("Ange ny författare.");
                         book.Author = ReadLine();
+                        Clear();
                         WriteLine("Uppdateringen av författare lyckades.");
                         break;
 
@@ -162,6 +164,7 @@ namespace BiblanMain.Classes
 
                         //Kod för att koppla till databas medSQLite
 
+                        Clear();
                         WriteLine("Uppdateringen av ISBN-Nummer lyckades.");
                         break;
 
