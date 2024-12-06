@@ -30,7 +30,7 @@ namespace BiblanMain.Classes
         
         //metod för att skapa användare, kan ej användas nu pga någon krock som blir med delen som kopplar
         //till databas, får det bara att funka i main, därför är det lite rörigt i mainkoden.
-        public static void SignUp()
+        /*public static void SignUp()
         {
             WriteLine("Registrera användare eller administratör");
             WriteLine("Ange önskat användarnamn:");
@@ -51,7 +51,7 @@ namespace BiblanMain.Classes
             {
                 WriteLine("Ogiltig input för administratör, vänligen ange 0 eller 1.");
             }
-        }
+        }*/
 
         //metod getdata för att hämta användare från databas vi inloggning
         public void GetData(List<SignupClass> usernames)
@@ -94,6 +94,29 @@ namespace BiblanMain.Classes
             }
         }
 
+        //metod för att kontrollera om användarnamn redan finns i databas
+        public static bool IfUsernameInTable(string username)
+        {
+            var sql = "SELECT COUNT(username) FROM usersAndAdmin WHERE username = @username";
+
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=MainServer.db");
+                connection.Open();
+
+                using var command = new SqliteCommand(sql, connection);
+                command.Parameters.AddWithValue("@username", username);
+
+                // Kontrollera om användarnamnet redan finns
+                var count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            catch (SqliteException ex)
+            {
+                WriteLine($"Ett fel inträffade när användarnamnet kontrollerades: {ex.Message}");
+                return false;
+            }
+        }
 
 
 

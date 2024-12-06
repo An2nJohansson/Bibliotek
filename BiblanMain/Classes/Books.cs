@@ -56,7 +56,7 @@ namespace BiblanMain.Classes
             Clear();
             WriteLine($"Boken {title} har lagts till i biblioteket.");
             
-            //Kod för att koppla till databas medSQLite
+            //Kod för att koppla till databas med SQLite
         }
 
         public static void BorrowBook() //Metod för att låna bok
@@ -72,7 +72,7 @@ namespace BiblanMain.Classes
                 {
                     book.Available = false;
                     
-                    //Kod för att koppla till databas medSQLite
+                    //Kod för att koppla till databas med SQLite
                     
                     Clear();
                     WriteLine($"Utlåningen av \"{book.Title}\" lyckades ");
@@ -102,7 +102,7 @@ namespace BiblanMain.Classes
                 {
                     book.Available=true;
 
-                    //Kod för att koppla till databas medSQLite
+                    //Kod för att koppla till databas med SQLite
 
                     Clear();
                     WriteLine($"Du har lämnat tillbaka boken \"{book.Title}\" ");
@@ -162,7 +162,7 @@ namespace BiblanMain.Classes
                         WriteLine("ange nytt ISBN-Nummer");
                         book.ISBN = ReadLine();
 
-                        //Kod för att koppla till databas medSQLite
+                        //Kod för att koppla till databas med SQLite
 
                         Clear();
                         WriteLine("Uppdateringen av ISBN-Nummer lyckades.");
@@ -192,7 +192,7 @@ namespace BiblanMain.Classes
             {
                 books.Remove(book);
 
-                //Kod för att koppla till databas medSQLite
+                //Kod för att koppla till databas med SQLite
 
                 Clear();
                 WriteLine($"\"{book.Title}\" har raderats från systemet.");
@@ -229,7 +229,7 @@ namespace BiblanMain.Classes
                 WriteLine("Kunde inte hitta några böcker med den titeln, var vänlig försök igen.");
             }
 
-            //Kod för att koppla till databas medSQLite
+            //Kod för att koppla till databas med SQLite
             //Om jag hade tid så hade jag skapat kod här så att man kunde söka efter författare och isbn också + sql.
         }   //searchAuthor
             //searchISBN

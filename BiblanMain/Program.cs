@@ -33,6 +33,22 @@ while (true)
                 WriteLine("Ange önskat användarnamn:");
                 string username = ReadLine();
 
+                // Kontrollera om användarnamnet redan finns i listan
+                if (usernames.Any(u => u.Username == username))
+                {
+                    Clear();
+                    WriteLine("Användarnamnet är redan upptaget. Välj ett annat.");
+                    break;
+                }
+
+                // Kontrollera om användarnamnet finns i databasen
+                if (SignupClass.IfUsernameInTable(username))
+                {
+                    Clear();
+                    WriteLine("Användarnamnet är redan upptaget. Var vänlig välj ett annat.");
+                    break;
+                }
+
                 WriteLine("Ange önskat lösenord:");
                 string password = ReadLine();
 
